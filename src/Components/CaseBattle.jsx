@@ -6,20 +6,23 @@ import Chats from "./Chats";
 
 const CaseBattle = () => {
   return (
-    <div className="bg-[#0b1020]  text-white min-h-screen ">
-      <Header />
-      <div className="flex ">
-        {/* LEFT */}
-        <Sidebar />
+    <div className="flex h-screen bg-[#0b0e14] text-gray-400 font-sans overflow-hidden">
+      <Sidebar />
+
+      <div className="flex-1 flex flex-col ">
+        <div>
+          <Header />
+        </div>
 
         {/* CENTER */}
-        <main className="flex-1 p-6">
+        <main className="">
           <BattleList />
         </main>
 
         {/* RIGHT */}
-        <Chats />
+       
       </div>
+       <Chats />
     </div>
   );
 };
