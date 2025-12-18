@@ -1,9 +1,27 @@
-import React from 'react'
+import React from "react";
+import Header from "./Header";
+import Sidebar from "./Sidebar";
+import BattleList from "./BattleList";
+import Chats from "./Chats";
 
 const CaseBattle = () => {
   return (
-    <div>CaseBattle</div>
-  )
-}
+    <div className="bg-[#0b1020]  text-white min-h-screen ">
+      <Header />
+      <div className="flex ">
+        {/* LEFT */}
+        <Sidebar />
 
-export default CaseBattle
+        {/* CENTER */}
+        <main className="flex-1 p-6">
+          <BattleList />
+        </main>
+
+        {/* RIGHT */}
+        <Chats />
+      </div>
+    </div>
+  );
+};
+
+export default CaseBattle;
