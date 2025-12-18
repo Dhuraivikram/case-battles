@@ -1,4 +1,6 @@
 import React from "react";
+import { HiOutlineNewspaper } from "react-icons/hi2";
+import { MdOutlinePrivacyTip } from "react-icons/md";
 
 export default function LiveChatPanel() {
   const chats = [
@@ -23,7 +25,41 @@ export default function LiveChatPanel() {
       avatar: "https://i.pravatar.cc/40?img=3",
       mod: false,
     },
-    
+    {
+      name: "baller95",
+      level: 32,
+      msg: "no begging",
+      avatar: "https://i.pravatar.cc/40?img=4",
+      mod: false,
+    },
+    {
+      name: "MOD Austinx",
+      level: "⭐",
+      msg: "Begging in chat will result .",
+      avatar: "https://i.pravatar.cc/40?img=5",
+      mod: true,
+    },
+    {
+      name: "Jur1",
+      level: 56,
+      msg: "Yeah i just got a crazy drop",
+      avatar: "https://i.pravatar.cc/40?img=1",
+      mod: false,
+    },
+    {
+      name: "IRONSIDE",
+      level: 72,
+      msg: "im up like 500K for this ",
+      avatar: "https://i.pravatar.cc/40?img=2",
+      mod: false,
+    },
+    {
+      name: "minxxie",
+      level: 7,
+      msg: "oh damn u think i could get.",
+      avatar: "https://i.pravatar.cc/40?img=3",
+      mod: false,
+    },
     {
       name: "baller95",
       level: 32,
@@ -41,18 +77,18 @@ export default function LiveChatPanel() {
   ];
 
   return (
-
-     <aside className="w-70  border-l border-white/5">
-      <h1 className="px-6 py-4 text-xl font-semibold border-b w-full h-16 border-white/5">
-
-Chats
-        
-      </h1>
+    <aside className="w-70 h-screen flex flex-col border-l border-white/5 bg-[#070d18]">
+      <div className="flex justify-between items-center px-6 py-4 text-xl ">
+        <div class="bg-green-600 rounded-full px-1 w-1 h-2 shadow-[0_0_8px_rgba(234,179,8,0.8)]"></div>
+        <h1 className="font-semibold text-white  border-white/5">CHAT</h1>
+        <h1 className="bg-white/40 px-2 rounded text-xs flex gap-x-1 py-1"><MdOutlinePrivacyTip />Tip</h1>
+        <h1 className="bg-white/40 px-2 rounded text-xs flex gap-x-1 py-1"><HiOutlineNewspaper />Rules</h1>
+        <h1>x</h1>
+      </div>
       <nav className="space-y-1 px-3 mt-1">
-
         {/* Live Rain */}
-        <div className="">
-          <div className="rounded-2xl border border-yellow-500/30 bg-gradient-to-b from-[#2a2510] to-[#0b1020] p-4 shadow-lg">
+        <div className="px-3 py-3">
+          <div className=" rounded-xl relative border bg-[url(src/assets/img-chat.jpg)] bg-cover border-yellow-500/30 bg-gradient-to-b from-[#2a2510] to-[#0b1020] p-4 shadow-lg">
             <div className="flex justify-between items-center">
               <div>
                 <p className="text-yellow-400 text-xl font-bold">$36.12</p>
@@ -61,20 +97,27 @@ Chats
                 </p>
               </div>
               <div className="flex gap-2">
-                <button className="bg-green-400 hover:bg-green-500 text-black px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                <button className="bg-green-400 hover:bg-green-500 text-black px-3 py-1.5 rounded text-xs font-extrabold transition">
                   Join
                 </button>
-                <button className="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-lg text-xs font-bold transition">
+                <button className="bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded text-xs font-extrabold transition">
                   +
                 </button>
               </div>
             </div>
+            <div class="absolute rounded-2xl bottom-0 right-0 h-0.5 w-full bg-white/10 mt-1">
+              <div class="h-full bg-yellow-500 w-[60%] shadow-[0_0_8px_rgba(234,179,8,0.8)]"></div>
+            </div>
           </div>
         </div>
 
-
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto px-3 space-y-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+        <div className="h-[350px] flex-1 overflow-y-auto px-3 space-y-4 scrollbar-thumb-white/20 scrollbar-track-transparent">
+          {chats.length === 0 && (
+            <p className="flex justify-center text-white/40 text-sm mt-10">
+              No messages yet
+            </p>
+          )}
           {chats.map((c, i) => (
             <div
               key={i}
@@ -125,12 +168,7 @@ Chats
             </button>
           </div>
         </div>
-    
-
       </nav>
     </aside>
-  )
+  );
 }
-
-    
-
