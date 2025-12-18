@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Case Battles | FATE.GG Clone</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#6ee7b7", // Neon Green/Mint accent
+                        "primary-hover": "#34d399",
+                        "background-light": "#f3f4f6", // Fallback for light mode (though design is dark-centric)
+                        "background-dark": "#0f1219", // Deep dark navy/black
+                        "card-dark": "#1a1d26", // Slightly lighter navy for cards
+                        "card-lighter": "#232733",
+                        "nav-dark": "#13161c",
+                        "accent-red": "#ef4444",
+                        "accent-blue": "#3b82f6",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        sans: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        'xl': '0.75rem',
+                        '2xl': '1rem',
+                    },
+                    boxShadow: {
+                        'glow': '0 0 15px -3px rgba(110, 231, 183, 0.3)',
+                    }
+                },
+            },
+        };
+    </script>
+<style>::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #2d3748;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4a5568;
+        }
+        .case-gradient {
+            background: radial-gradient(circle at center, rgba(59, 130, 246, 0.15) 0%, rgba(26, 29, 38, 0) 70%);
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-gray-800 dark:text-gray-200 font-sans antialiased h-screen overflow-hidden flex flex-col transition-colors duration-200 dark">
+<header class="h-16 bg-white dark:bg-nav-dark border-b border-gray-200 dark:border-gray-800 flex items-center justify-between px-4 z-20 shrink-0">
+<div class="flex items-center gap-4">
+<button class="lg:hidden text-gray-500 dark:text-gray-400">
+<span class="material-icons-round">menu</span>
+</button>
+<div class="flex items-center gap-2 font-display font-bold text-xl tracking-tight text-gray-900 dark:text-white">
+<div class="w-8 h-8 bg-gradient-to-br from-primary to-green-600 rounded flex items-center justify-center text-nav-dark">
+<span class="material-icons-round text-sm font-bold">diamond</span>
+</div>
+                FATE.GG
+            </div>
+</div>
+<div class="hidden md:flex items-center bg-gray-100 dark:bg-card-dark rounded-lg p-1 border border-gray-200 dark:border-gray-700/50">
+<div class="px-3 font-mono font-bold text-gray-700 dark:text-gray-200">$0.00</div>
+<button class="bg-primary hover:bg-primary-hover text-nav-dark p-1.5 rounded-md transition-colors shadow-glow">
+<span class="material-icons-round text-sm">account_balance_wallet</span>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<button class="relative p-2 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white transition-colors">
+<span class="material-icons-round">notifications</span>
+<span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+</button>
+<div class="flex items-center gap-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-card-dark p-1.5 rounded-lg transition-colors border border-transparent dark:hover:border-gray-700">
+<img alt="User Avatar" class="w-8 h-8 rounded-md bg-gray-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXR0B2gXhCSEe2Tg4YpS5ZeQLrTANQ7O07BiaGcjONaHbPWdEsi0LQTzWTinGyKT9XdJfOtLYQoPv1sCThozX2rBXfo_o4M-zLUgcGJhr9I0jSPFpkkFLstma1mq2eAwfp_sbUdXxFW7C3DMzb_97g1Ph0pJSqaIiLSoDusHQb7uJ_sKRZ0FdyOXmfQcwShk3ywXxEnbXADk2Ku-pc08YAViR3kiwwUV5uODXxa4I1_dqoanbPgX8QuNPo0ol00-4rTL-1jx01gFI"/>
+<span class="material-icons-round text-gray-400">expand_more</span>
+</div>
+<div class="hidden xl:flex items-center gap-2 ml-4 border-l border-gray-200 dark:border-gray-700 pl-4">
+<div class="flex items-center gap-1 text-xs font-bold text-primary">
+<span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+                    CHAT
+                 </div>
+<button class="flex items-center gap-1 text-xs font-semibold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-card-dark px-2 py-1.5 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+<span class="material-icons-round text-xs">savings</span> Tip
+                 </button>
+<button class="flex items-center gap-1 text-xs font-semibold text-gray-500 dark:text-gray-400 bg-gray-100 dark:bg-card-dark px-2 py-1.5 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition">
+<span class="material-icons-round text-xs">gavel</span> Rules
+                 </button>
+</div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<aside class="w-64 bg-white dark:bg-nav-dark border-r border-gray-200 dark:border-gray-800 flex flex-col overflow-y-auto hidden lg:flex shrink-0">
+<nav class="flex-1 p-4 space-y-6">
+<div>
+<div class="flex items-center justify-between text-xs font-bold text-gray-500 dark:text-gray-500 uppercase tracking-wider mb-3 px-3">
+                        Games
+                        <span class="material-icons-round text-sm cursor-pointer">expand_less</span>
+</div>
+<ul class="space-y-1">
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-card-dark hover:text-gray-900 dark:hover:text-white transition-all group" href="#">
+<span class="material-icons-round text-lg text-gray-400 group-hover:text-primary transition-colors">swords</span>
+<span class="font-medium">Battles</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary dark:text-primary border border-primary/20 shadow-[0_0_10px_-3px_rgba(110,231,183,0.1)]" href="#">
+<span class="material-icons-round text-lg">inventory_2</span>
+<span class="font-medium">Cases</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-card-dark hover:text-gray-900 dark:hover:text-white transition-all group" href="#">
+<span class="material-icons-round text-lg text-gray-400 group-hover:text-primary transition-colors">upgrade</span>
+<span class="font-medium">Upgrader</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-card-dark hover:text-gray-900 dark:hover:text-white transition-all group" href="#">
+<span class="material-icons-round text-lg text-gray-400 group-hover:text-primary transition-colors">token</span>
+<span class="font-medium">Mines</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-card-dark hover:text-gray-900 dark:hover:text-white transition-all group" href="#">
+<span class="material-icons-round text-lg text-gray-400 group-hover:text-primary transition-colors">style</span>
+<span class="font-medium">Blackjack</span>
+</a>
+</li>
+</ul>
+</div>
+<div>
+<div class="flex items-center justify-between text-xs font-bold text-gray-500 dark:text-gray-500 uppercase tracking-wider mb-3 px-3">
+                        Account
+                        <span class="material-icons-round text-sm cursor-pointer">expand_more</span>
+</div>
+</div>
+<div>
+<div class="flex items-center justify-between text-xs font-bold text-gray-500 dark:text-gray-500 uppercase tracking-wider mb-3 px-3">
+                        Features
+                        <span class="material-icons-round text-sm cursor-pointer">expand_more</span>
+</div>
+</div>
+</nav>
+<div class="p-4 border-t border-gray-200 dark:border-gray-800">
+<div class="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-600">
+<span class="w-2 h-2 bg-green-500 rounded-full"></span>
+                     Servers Operational
+                </div>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark p-4 md:p-8 relative">
+<div class="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-blue-900/10 to-transparent pointer-events-none"></div>
+<div class="max-w-6xl mx-auto relative z-10">
+<div class="flex flex-col md:flex-row md:items-center justify-between mb-8 gap-4">
+<div class="flex items-center gap-3">
+<span class="material-icons-round text-primary text-3xl">swords</span>
+<h1 class="text-2xl font-bold text-gray-900 dark:text-white">Case Battles</h1>
+</div>
+<div class="flex items-center gap-3">
+<div class="hidden md:flex bg-gray-200 dark:bg-card-dark rounded-lg p-1 border border-gray-300 dark:border-gray-700">
+<button class="px-4 py-1.5 rounded-md bg-white dark:bg-card-lighter text-gray-900 dark:text-white text-sm font-medium shadow-sm transition-all">Price</button>
+<button class="px-4 py-1.5 rounded-md text-gray-500 dark:text-gray-400 text-sm font-medium hover:text-gray-900 dark:hover:text-white transition-all">Newest</button>
+</div>
+<button class="bg-primary hover:bg-primary-hover text-nav-dark font-bold py-2 px-6 rounded-lg shadow-glow flex items-center gap-2 transition-transform active:scale-95">
+<span class="material-icons-round">add</span>
+                            CREATE BATTLE
+                        </button>
+</div>
+</div>
+<div class="space-y-4">
+<div class="bg-white dark:bg-card-dark rounded-xl p-1 border border-gray-200 dark:border-gray-800 hover:border-primary/30 transition-colors group">
+<div class="bg-gray-50 dark:bg-[#151820] rounded-lg p-4 flex flex-col lg:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-4 min-w-[140px]">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="bg-red-500/10 text-red-500 border border-red-500/20 text-[10px] font-bold px-2 py-0.5 rounded uppercase flex items-center gap-1">
+<span class="material-icons-round text-[10px]">local_fire_department</span> Crazy
+                                        </span>
+<span class="text-gray-400 text-xs font-mono flex items-center gap-1">
+<span class="material-icons-round text-[12px]">inventory_2</span> 20 Cases
+                                        </span>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<img class="w-10 h-10 rounded bg-gray-700 border-2 border-transparent group-hover:border-primary transition-colors" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAX0NRPLnqriZo38s0xEQ8-K6s6i4EjCIf8HkpAygE-TCH-0G5BrPWY4aLzmMeGnUQ6UfW6MqTq6yu_63lGEycyhldLBrO4OGa3WF3eDn0ONXN7ZWC8t89-zzrDoN4ddd438m3jW-jzTAwtwuBJIDcVvm2-vg5TwAJlOtYcFvv6PHQbRvHz9ipanFUqeeWkPs6Ohl_Ip-3Nsy4tM6es1N5gxiyGQBD6w5_0ylmniwmMoitt_fEWe2qvLxBDPqhXgPIp26BQxzx9SX4"/>
+<div class="w-10 h-10 rounded bg-card-lighter border border-dashed border-gray-600 flex items-center justify-center text-gray-500 text-xs font-bold animate-pulse">?</div>
+<div class="w-10 h-10 rounded bg-card-lighter border border-dashed border-gray-600 flex items-center justify-center text-gray-500 text-xs font-bold opacity-50">?</div>
+<div class="w-10 h-10 rounded bg-card-lighter border border-dashed border-gray-600 flex items-center justify-center text-gray-500 text-xs font-bold opacity-30">?</div>
+</div>
+</div>
+</div>
+<div class="flex-1 flex items-center justify-center gap-2 overflow-hidden px-4">
+<div class="relative w-16 h-16 shrink-0 case-gradient flex items-center justify-center transition-transform hover:-translate-y-1">
+<img alt="Case" class="w-14 h-14 object-contain drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD0d3ls9BaKIu0Te7duXyovUFt7sE9i0ByXhWo3xV4lmsDCsgAG12Haxs17MfUmLPIKgFPvCyARmAONgvoWbdiQTTTIAwr8LBQID_MKFJ0qC82RPjgsnOeLFv_VlnwZhRJfbHpgXmafhLDu95VokTRkgpE83pBjjcvvnc1JeG0h2hf6PeW6A6SuEcNFmiVOpHWfzIPhRiUET_tScB5z5z9IuDpC_BonEme93oSsXt-4hZwr-j3k_0n5BLXvq1mgvrNa3ZEjRkirrso"/>
+</div>
+<div class="relative w-16 h-16 shrink-0 case-gradient flex items-center justify-center transition-transform hover:-translate-y-1">
+<img alt="Case" class="w-14 h-14 object-contain drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuApjnog6SUd05oaKHDoBys_n8g_c0crJtLh7N6vd7dJAitLpa0EqPRA-gN_IBI-4g4ZX0B3YWfBaWYhDCrH_b4Pm4cP870hQSG-pbMP7fMY4B5EBXzZu59Jnf56raXG3O-r1sqckz9YKyYXNwuoA6YDtBKKIeLaVWCTOc9Hhbla_8tEhXmqGM16aail2LxH20I18NTLcD7iRFydu4Tu1GyWVNZ8xBuW-uH3_e4PW6SgGLA6YcpNDgRVJ5MIWVkaOu6OmQWru5E0d94"/>
+</div>
+<div class="relative w-16 h-16 shrink-0 case-gradient flex items-center justify-center transition-transform hover:-translate-y-1">
+<img alt="Case" class="w-14 h-14 object-contain drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDd58DKjnu-3GrtglOHSkp4sjecM_Z-__4pC6sW9hlx22aI91jJuTgU9G-J_6qoxDriueduqs2XPHPeVoY4CYF8VkX_GOUGovYdPjKaajajO-521Eva1mU3yAShObtppSedJYaVPOfKMgBybE-QxpQvcQ6kl0_quP2pou8eJQEPx5mdC1BUSZ3yvYcIjNGaYwpK5-bjrHkjcVU2DGH9_7EIN5rYdMWOX1gUPF6CYw0F5qp2pcsJzEAfHxgaWq2Git2WFgm38wf5Tf0"/>
+</div>
+<div class="relative w-16 h-16 shrink-0 case-gradient flex items-center justify-center transition-transform hover:-translate-y-1">
+<img alt="Case" class="w-14 h-14 object-contain drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJrjUNMH248HiSmeZX2XyAc1aWNyHzOQ0jqjnVeAjpNsX6deXopkMidNBf2ecZygcCVNrVoDF4cNCXx4xknMmGtJj_qZPDiH3_bOeEfEPFDWmXwu9OSZ8CvedPWcuOMJaFRpIzSDx1N4CFE3vds1Gpkegm_TTjFDDMPhtP5v2613DF47iqoD0Nql8vdPoG4nW4Jnh2cmE5KMk1ocBhThJDV-aVJR2kZ6lRN9gq_i9JUTBFE1ktfHss3oKwvONo0tJwKaWt-_qkDXg"/>
+<div class="absolute -top-1 -right-1 bg-card-dark text-[10px] px-1 rounded border border-gray-700 font-mono text-gray-400">x4</div>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2 min-w-[120px]">
+<div class="text-xs font-bold text-gray-500 uppercase">Cost: <span class="text-gray-300">$85.00</span></div>
+<button class="bg-accent-red hover:bg-red-500 text-white font-bold py-2 px-6 rounded shadow-lg shadow-red-500/20 transition-all text-sm w-full">
+                                    JOIN
+                                </button>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-card-dark rounded-xl p-1 border border-gray-200 dark:border-gray-800">
+<div class="bg-gray-50 dark:bg-[#151820] rounded-lg p-4 flex flex-col lg:flex-row items-center justify-between gap-6 relative overflow-hidden">
+<div class="absolute left-0 top-0 h-full w-1 bg-primary shadow-[0_0_15px_2px_rgba(74,222,128,0.6)]"></div>
+<div class="flex items-center gap-4 min-w-[140px]">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="bg-blue-500/10 text-blue-400 border border-blue-500/20 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Normal</span>
+<span class="text-gray-400 text-xs font-mono flex items-center gap-1">
+<span class="material-icons-round text-[12px] text-primary">timelapse</span> 12/20
+                                        </span>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<div class="relative">
+<img class="w-10 h-10 rounded bg-gray-700 border border-gray-600" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxQkuyM4W60Uvs5atR62xnsl2Nth6tOXWIwwb4Nf5v1sdToEf028BnT9-_NwqW0AAjZTtfobQAJQgLe8HUDVW8pe71CZqaa4oiPzXzZ3K0woBypA1QDVk7aXqkJz_sohcpUL_iGMasKM2UBeXvy8FVauVjJ2spWg6NzYro4LyXINi8pXHv6tS35GOeF4G_GyJ25y4QQHHTFt9gJLeh0zk4S8J_yKcKZ_vYfb7cCs8ovkdA1gltT2fqP10CZ8Y3JMMpuOuyv5ihS50"/>
+<div class="absolute -bottom-1 -right-1 w-3 h-3 bg-green-500 border-2 border-[#151820] rounded-full"></div>
+</div>
+<img class="w-10 h-10 rounded bg-gray-700 border border-gray-600 opacity-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDET-cqaMG4gd8eGEbO5rocwzMZlbe93ojrmXnheZKcDPf9M0n4i3wd88a6sI5t1OBOB9muxbDVTavgid9MQvr5kwR6qIHiOLESv68sU_lktT7zBhzinFAmincBlrv7lU71pPR5rvIH2AeXZVidzCYdl1SLgtgDbn9Cp43-Kz0AaU7jXxXUjw3Y29QEDHrsnAnO7tKQEBnMlNe30Ge3lGTHemrFQOaI4QYpgduvSiEm_Ye0STctWpALNO_PWAf5Wuv-pTUp264Urlo"/>
+<img class="w-10 h-10 rounded bg-gray-700 border border-gray-600 opacity-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2h8U2PgPZ4IQxOzCII0vC8uMGnsESJlSHIjjWShJhhmKZ0L2QOeNHYBN-LVxO_I0RXzBvYj7yvPsJ6ZuBRiIZQ8690UOFtbC3pTYRuQciAYNcxi3PpZPsfmRww3oqLwJnJkNWymeFb6H8T_R-NgaPS-x5qNh_PanKlY9uG-7cdNOllvpo2U1w4VOcs-3XHzbX8NybShS5zHGv-MUevN-tWbjF62dM9cXSDRtnRRA2OVDeaOnDX848W_sAts5vwWRWEiRtMN56krs"/>
+<img class="w-10 h-10 rounded bg-gray-700 border border-gray-600 opacity-50" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDon7_A2387ST2Uph2HrAQMTPyjQO9Y5ZR2IEsFXoJ8GecHGC7ASRGbsVh-KZZYLZz88LKwHesOgbFN-XPsKWRN4c9zdeONcEDn2TTF8rIi5ePtyCczmTuTJqHPu9xmwLVj1SW_el3TZ3Ofslnf7tIrB1x6BG7UMdMKOkdX01L2gr_DbonnnNjJc-DRXSNtkwh034fSYqKHem3gF1bJQ5HDqrudqqRoxESNxRWNeEt8AdHWzgS5rTnC7OmxlYF3lF7YvWwg-bNqwP4"/>
+</div>
+</div>
+</div>
+<div class="flex-1 flex items-center justify-center gap-4">
+<div class="relative w-20 h-24 bg-card-dark border border-primary rounded-lg flex flex-col items-center justify-center shadow-[0_0_20px_-5px_rgba(74,222,128,0.2)]">
+<div class="text-[10px] text-primary font-bold uppercase mb-1 tracking-widest">Opening</div>
+<img alt="Active Case" class="w-12 h-12 object-contain animate-bounce" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYxVpRdMF2RcqRe233KdsdtfzNqSHg4-kJ6VvseMDuiGYqpAxxBetLpWUCqvZa2gbQrR5L_ZqSEfzfg4TtOjlXkec58-reyyQsM3Tg_M01Bv2lVFx-19mfAFIvRDMeLtc-i8MZbU08RJqry-_0J3lhhX-ic-lvUZ-pQIKQPgObY5NrWguM5xEPl96Vlk9EwBRqW-RXRqXnzf2C33e22KDX5PYYgQ6mDi1XcaAp-sE33Ntu8090eJmhnEL9YWDBGAakpKLs-Rk3u_E"/>
+<div class="absolute -top-3">
+<span class="material-icons-round text-primary text-lg">keyboard_arrow_down</span>
+</div>
+</div>
+<div class="opacity-30 blur-[1px]">
+<img class="w-12 h-12 grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzk_YEPMy1MRhrU2UKGVSL76RwTRupaiTgTtNNcS6HlNIYXhcGPzP7vTIuuBSBnfu5bl1l3HMMRjzqWiNST_4vBmf0lHIgAuwIy9GmwTcf8t2NscFfGY-qEDm_8KFUOFBGCbG_F3yCrbAOOSY7ZIm27ZG709NjbUA2Hck-N2epahVn72tmWx5rAvNOtjSltBcdjozXMAmxfnoehicH_m3Ssp9y2kjWDHoJB5F6xBkaNIGqt2ORRVJiRQsWfIOdv5NCuDKnAXvK-_0"/>
+</div>
+<div class="opacity-20 blur-[2px]">
+<img class="w-12 h-12 grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAV_ueGqpkCYg0B2fe1mU-eaYkJV1jQVqpD1onwwuqHwlFhdGR33X-ytQvxVMMeOKsC8QGE_2wBK9ZXJUiEdvFopiVT5bfilRedq8icclQNQ-V01djcq-KfLBN9JlZc4OtPdqqy2GDqWDhw0wPrcfkvWV8Gd9EeZa6rkJfARm_HgAotmllSEtnQC7K3ZuhaMHJgFUQxlsnJLpOvG6Zbwla6Y8n-k1D5kVknptYVURiFDsy4SSOHWi-XR7bbPG1-QWjdAFRIbQLd4Eg"/>
+</div>
+</div>
+<div class="flex flex-col items-end gap-2 min-w-[120px]">
+<div class="text-xs font-bold text-gray-500 uppercase">Cost: <span class="text-gray-300">$85.00</span></div>
+<button class="bg-card-lighter hover:bg-card-dark text-gray-300 border border-gray-600 font-bold py-2 px-6 rounded transition-all text-sm w-full flex items-center justify-center gap-2">
+                                    WATCH <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+</button>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-card-dark rounded-xl p-1 border border-gray-200 dark:border-gray-800 opacity-80 hover:opacity-100 transition-opacity">
+<div class="bg-gray-50 dark:bg-[#151820] rounded-lg p-4 flex flex-col lg:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-4 min-w-[140px]">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="bg-gray-700 text-gray-400 border border-gray-600 text-[10px] font-bold px-2 py-0.5 rounded uppercase">Normal</span>
+<span class="text-gray-500 text-xs font-mono flex items-center gap-1">
+<span class="material-icons-round text-[12px]">check_circle</span> Ended
+                                        </span>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<div class="relative group cursor-pointer">
+<img class="w-10 h-10 rounded bg-gray-700 border-2 border-primary shadow-[0_0_10px_rgba(74,222,128,0.4)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD52z8xfiaTPNNl2ULBRQhLMPuZ9hYoj576Vg4fQjfSx1ljXfH_YEHriQOI_q63Q_82dZkswYFoJCyoxsn4xip5vZM1DmWh-zk13sPG5FSKYd_G5j1NJEm3H45REFdG6eE21jGneorjSVgOedjsIMTXl1z_HS8SzGwJ-rBImQOTbw7S_Iox7NqvLG7sSulfa0ZJnfQBxInieYm1HC9SAc44XhOMrRx8-jZFaPgZ3q6lnrTIPkCz1ugeakWbrXVz9VbELtmScJ9Ci0g"/>
+<div class="absolute -top-8 left-1/2 -translate-x-1/2 bg-black text-white text-[10px] py-0.5 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Winner</div>
+</div>
+<img class="w-10 h-10 rounded bg-gray-700 border border-gray-600 grayscale opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDxbLAeiNk7oXyUq0qFM1ClXnbizEbbCGtDRkrMrPhoonR2X8UHAlVpvfB14z6V6d2JZK3n_uD_wlZfzuGVF3ra3qMs2CKB-sy31enSGtVNEJnbm8IEV3BzXUNxNgSZxghKz2Wr6h0c0OzwEOaApZRxqD3lcxnwoenm0MUQsPYaSZNoauiXXHoy_6J3oMdf9qNFRkkE8IUKKPEvnBE9aOfI41DFi0i1qY37rT9minmvzCbuG_uB3NW6_4JkEYfEptUStMHBgu4_URk"/>
+<div class="text-gray-600 text-xs font-bold px-1">VS</div>
+<img class="w-10 h-10 rounded bg-gray-700 border border-gray-600 grayscale opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDBMH1chSt13xE4AZ5UTokVsrNR2j3UQq-16OnV-826NOS3a6eJ35gfLF8TXkDANK-S7tB8Z0eOa74LL3ehoqKXbWcIxhMNURuEyQAS9-_NtL4xj_WUE4jF0ps2SbcpSKHxBQftsmCh4l_SizqaTiBTUIMRv-crS3i7h4vb04UpqH01dUjFlHrIrI8xnJdqRH3KAzdXKxTTD4zc40625_hsztmsNKiWV9QaQPLnA9M2UyI5tqUEO-iGgc3JHPBgXiNSwHqXM_j_NL4"/>
+</div>
+</div>
+</div>
+<div class="flex-1 flex items-center justify-center gap-2 overflow-hidden px-4 opacity-50 grayscale hover:grayscale-0 transition-all">
+<div class="relative w-14 h-14 bg-card-dark rounded border border-gray-700 flex items-center justify-center">
+<img class="w-10 h-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuClPSuROk97ZjAYRzuWx1Q5fcjYVGwXRIW2lw_sgYEMYe5SUoiGrIELXjtXftW5GnFOhlZH5Wyx-P_crtZIYKD3EmxVNkSxcgbmU2DwB4ZFP1KtnJfL_VAvBwrsGdKRx2qs7bW2HxlTHHUJq6L5x07qrLPqRMuXj6vA51fzRf1DtcYprCXLGGQVv-cEpxjnC1pxk2ydPUnnhODtpgvU9bqbMtl2BXBqHRPzCv8O2oNMrxFRd5ao8cQp5JsubM1lToCeX-vrGvn_WN8"/>
+</div>
+<div class="relative w-14 h-14 bg-card-dark rounded border border-gray-700 flex items-center justify-center">
+<img class="w-10 h-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCU97hzS0J_GjOZhl0eTCUTwEtaG8CJWf0U5C7g9aCHWM4AmAwCMHCxxo5pmZa6uC1a2IsdvFtxKWOJDvYVVbVuLorTiO3lFpcJVzPKH4I73HZ9bnFWCCvdpH8GgQyawnmUJSScaa7zAGrG-rPrbtzDkWKvmuDQG7X_mlsA4AOqCDpYrEmqqioNJViTXpSVAQONcAJm4cduQ7rMMxUIr_sSPwOuhtQzM7Gg1Ia5DRyDsa2ta1VqgV2A1tPhj47LDz9IZWANOF1GDWE"/>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1 min-w-[120px]">
+<div class="text-xs font-bold text-gray-500 uppercase">Unboxed: <span class="text-white font-mono">$256.35</span></div>
+<button class="bg-card-dark hover:bg-card-lighter text-gray-400 font-bold py-1.5 px-4 border border-gray-700 rounded transition-all text-xs w-full flex items-center justify-center gap-1">
+<span class="material-icons-round text-sm">replay</span> REPLAY
+                                </button>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-card-dark rounded-xl p-1 border border-gray-200 dark:border-gray-800 opacity-80 hover:opacity-100 transition-opacity">
+<div class="bg-gray-50 dark:bg-[#151820] rounded-lg p-4 flex flex-col lg:flex-row items-center justify-between gap-6">
+<div class="flex items-center gap-4 min-w-[140px]">
+<div class="flex flex-col gap-2">
+<div class="flex items-center gap-2">
+<span class="bg-red-500/10 text-red-500 border border-red-500/20 text-[10px] font-bold px-2 py-0.5 rounded uppercase flex items-center gap-1">
+<span class="material-icons-round text-[10px]">local_fire_department</span> Crazy
+                                        </span>
+<span class="text-gray-500 text-xs font-mono flex items-center gap-1">
+<span class="material-icons-round text-[12px]">check_circle</span> Ended
+                                        </span>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<img class="w-10 h-10 rounded bg-gray-700 border border-gray-600 grayscale opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcJRF9RHtTZxUCQe5JOnh-BjYyO5d_SRBCnebKvBcTqd-3cvkWJg3DKy9GBM5XamR_S_cnI_0vXsLtPC9D2r4ECUEP4tT5D-SZolXx6S-vS96891mKgR3Jzu0Z0jcRV0n726Suf8Lg7DIck1_h03op1Uj7lo_s5Azh-3sRPRovH1kRGV6rBHh-6Dg64nu1gZWMiH8GVVQ93qIwWtXam0TwisSeeholaCWkoI-rkXvXhtlGY58h2-1j4GQ1jRtctJtds7cHbGDdZvY"/>
+<img class="w-10 h-10 rounded bg-gray-700 border border-gray-600 grayscale opacity-60" src="https://lh3.googleusercontent.com/aida-public/AB6AXuALZ06kfWSmDPqNfidDQf-jIke9R-kSOn-UyinnLhZeMcfh_0cpnvryBaZw0B4cdbYL1-3jAlqcBnzGhKxr5Q-a_tSryaNmUTqX_kHZtIiw41kqn2sAKn-QZstiKxO0i6h1eNik8TKDSYo8J3LeYPofBh7kOi-vMP8VDsWRwhoB8qFF_HRimuUe8O1hXUNAYRI71JlTSn26HZMjrXhYT3zQIA7PcFE3ykLRrIuRY9mrl41S5p_L-3UP6aoEwNJG18ZmCXpHKQRZCyw"/>
+<div class="relative group cursor-pointer">
+<img class="w-10 h-10 rounded bg-gray-700 border-2 border-primary shadow-[0_0_10px_rgba(74,222,128,0.4)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDy0feXmrVQWdq13A6g10ESNwv6rAsGtB7Mu6tctqA1GFToUeOkSm877TZIlTZ5K0-2pjldLoSrnsDdik1SgTI3AeSqOvaMpR75y7f7fdqwfo7rbh4E725ZI4jiltkniTgfddP5Jm7yg-MBkdoQvK1PY3jlSIAJLgYNBLCXgxCTENjCIHss_uSc0NbKbSJsYxQP8Ri0INVsdmU0kKtBfUeVe1wcFO3e5j_wraAYVCUjhTt1o3AptWA2VWHu0JXua7r47g7IqScJieA"/>
+</div>
+<div class="relative group cursor-pointer">
+<img class="w-10 h-10 rounded bg-gray-700 border-2 border-yellow-500 shadow-[0_0_10px_rgba(234,179,8,0.4)]" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcHgD2ILr5S3YbpplxIC-DAC0tnnTeHaFqLFLavdDFht4QQl5D4oC9A88Je8pgtIGblAtSXp-FMH0Kg55ZqkXH0evQeM1ZmW1a1aZuCKUE0XV1qVf-11FqrdqjbMwOfpHJ2mRNstfyUyI0jZS9yiTqItFpuKB1OT8eg6yWKQmhGP7aBNAqavLapYZu1LtbUCJwTYpWnIkgQjDEfRLaSyDGSVCy8fJwhNMY_5vrIe7ulqEKCqyS4ASA-xga8AbF3rZ8A43aujAWhJ8"/>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-1 flex items-center justify-center gap-2 overflow-hidden px-4 opacity-50 grayscale hover:grayscale-0 transition-all">
+<div class="relative w-14 h-14 bg-card-dark rounded border border-gray-700 flex items-center justify-center">
+<img class="w-10 h-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBgsi5rO52ubFsAgVRbGBDP94mXuOVlYrcxDQSxVjWRvr-uPQK-rAlK4P_3n3ZaGKbcFHdOtidHPBQ6C0Le3ZRfagmdaJotTkqL_pkqgMxn-gsrjqzo11gqW9fiOKGxzyzvZvMDC4b2S2VPkTojAPLlH3E3CkcLqo1WSdlHz5zC2KVS_4LX0vENuoMzedCeTlexSTYSDv11YwmEcyMNv8DGUi635mS22l70J-YZsdyCZEW6qUzdzKoPM3UGR-7sQmHqLnfZkCV6OZA"/>
+</div>
+<div class="relative w-14 h-14 bg-card-dark rounded border border-gray-700 flex items-center justify-center">
+<img class="w-10 h-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBwtVtaBLlRusZi3WKmA0LXCioKvvO2ZokvR7uyQVFm4Sw98aR3UOXPdVwErza268iQc5ra8lZ7NkS70P85PWIg_ihCGs2BjKZVqOOYH_KP2VytCJRxva7cErLchJd9Wy4DIguHTJauiarNdBibeC-nX_qI9pGkrDD6Wn6lfWVLk-QBzpmPTLl_VnRMXZVDMK5QAWSqST9dtUiKLPYwbcK8cHUcJUXAtZkn77CiBI5wMuk6aySdAtO0zBYtxR_Bm9c7weZK9ESsnlk"/>
+</div>
+<div class="relative w-14 h-14 bg-card-dark rounded border border-gray-700 flex items-center justify-center">
+<img class="w-10 h-10" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIwVKCo6egN0hmCou5b4V25tNVXMvFBE_EBAiFiPPhXLUCtq8S2qN_sgx71_sumYWpfnSy5Y4pE-Sxl7UhtIUGaW-zpcSCZHn5h26yyIgjB_1aM1c6MW7u_4yj3QXdmPKKp1LjGlUsS9sZzSdkzm1VotEi4Y0d3UcsYRUxGIzXr8o2Mc3_VROPT35tY4HDvWaOCP_VhyRo6aGxo32QDNBc7So6y7-aNhjB5kB6KHPbuZsMLfyt3uM6XSU1qwENVUzOSJdyEATtojE"/>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1 min-w-[120px]">
+<div class="text-xs font-bold text-gray-500 uppercase">Unboxed: <span class="text-white font-mono">$256.35</span></div>
+<button class="bg-card-dark hover:bg-card-lighter text-gray-400 font-bold py-1.5 px-4 border border-gray-700 rounded transition-all text-xs w-full flex items-center justify-center gap-1">
+<span class="material-icons-round text-sm">replay</span> REPLAY
+                                </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<aside class="w-80 bg-white dark:bg-nav-dark border-l border-gray-200 dark:border-gray-800 flex flex-col hidden 2xl:flex shrink-0 z-10 relative">
+<div class="bg-gradient-to-r from-yellow-600/20 to-yellow-900/10 border-b border-yellow-600/30 p-4">
+<div class="flex justify-between items-center mb-2">
+<div>
+<div class="text-yellow-500 font-bold text-lg">$36.12</div>
+<div class="text-[10px] text-yellow-600/80 font-bold uppercase tracking-wider">Live Rain</div>
+</div>
+<div class="flex gap-2">
+<button class="bg-primary hover:bg-primary-hover text-nav-dark text-xs font-bold px-3 py-1.5 rounded shadow-sm">Join</button>
+<button class="bg-card-dark hover:bg-card-lighter text-gray-400 px-2 py-1.5 rounded border border-gray-700">
+<span class="material-icons-round text-sm">add</span>
+</button>
+</div>
+</div>
+<div class="text-[10px] text-gray-500">I just came on which one is it?</div>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-4">
+<div class="flex gap-3 group">
+<div class="shrink-0 relative">
+<img class="w-8 h-8 rounded bg-gray-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCCcEK9iumEo15dU3CApT6XP-p60AzO_S5u8BaqS5IsMpbuUyIR5jH2JmmjlZSg0-vlOo8YyqjNaDJddiFA9HLqgwUfgqDv0j5HaBtH674Ri7iM-kTlYZiQ3Skm_omWAafP9eSfHYtzqyQiKTtdNH8zUY3KzaGeh2JF7F1ycOkUJpyTCwUxx3w8_SRln_8fLKzMJvROrkUG1NGyMpyClvURrGmADM_VgM-fp3KFjRvetarYcgoIDTA-VaZJQgZORW5bpfReIt6ltsA"/>
+<div class="absolute -top-1 -right-1 bg-yellow-500 text-[8px] font-bold text-black px-1 rounded-sm">56</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="text-sm font-bold text-gray-200">Jur1</span>
+<span class="text-[10px] text-gray-600">12:42</span>
+</div>
+<p class="text-xs text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">Yeah I just got a crazy drop from it</p>
+</div>
+</div>
+<div class="flex gap-3 group">
+<div class="shrink-0 relative">
+<img class="w-8 h-8 rounded bg-gray-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgwQN8oPcg9RHxbVP7y0WPWxsS-oh1Mtii1psIsr6lCAvVD0Cnqb5lDFFYtOpIxl-yRSf7KtDn5u3_QFpMMBDNEJ9YOvJWKHG4uhFz9OilNYa1C2eWpbqvTR9PL3Edp5l9dvKwAKelyjB7ke6TyhLsqWETSHi6TYDu8PQRtsano6Kz6jmYTxePxx39GlWNccM6Q_94MYW-1IVMAfaSkvwpPkhdRGjaXS6CGprBzHOz3q_RTV7ZL6si6o-2FuO9XknaqcAzMdppZBo"/>
+<div class="absolute -top-1 -right-1 bg-red-500 text-[8px] font-bold text-white px-1 rounded-sm">72</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="text-sm font-bold text-red-400">IRONSIDE</span>
+</div>
+<p class="text-xs text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">im up like 500K for this week thats actually insane</p>
+</div>
+</div>
+<div class="flex gap-3 group">
+<div class="shrink-0 relative">
+<img class="w-8 h-8 rounded bg-gray-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDV4ZqjtDw6tCYZEjJ2I8fova-oinOsKV-IgNCNukws8isZuRZTdaAi6HDqMme3wuS9AV5rZYaqUOJnkeYAi5CHYvnaDQlsfLvSgQ5ZOsFSxcJKcTUq2Yo85niBudYNqutLY0aSg6RFYP7NLx0Ush8WADHRVKfr3dBDaRIuzyM3lLMwuVd6euEV0cRoMoE1R8Thb-oiXIDqSKAmNSbBhBHfHNSflL7Je0rffbvatsN5vpaJvzp4vyV0s6OGvZv4Eg55DZlCYgtU0oM"/>
+<div class="absolute -top-1 -right-1 bg-gray-600 text-[8px] font-bold text-white px-1 rounded-sm">7</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="text-sm font-bold text-gray-200">minxxie</span>
+</div>
+<p class="text-xs text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">oh damn u think i could get a tip?</p>
+</div>
+</div>
+<div class="flex gap-3 group bg-primary/5 -mx-2 px-2 py-1 rounded">
+<div class="shrink-0 relative">
+<img class="w-8 h-8 rounded bg-gray-700 border border-primary" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBzV4tgIQeRpd8Etnbl0mS9k2npDFzDSiTYDd_8SSD78MA60aLfiqmVeOzaUwBHoP3Z6qKddvKI1h2vnY4tyvnU1acESDBpwJU0KiuUzLyDPHByGNN7haDnUWviPcsKbngW_Bf_dCapJLIKeaC8ZijpMIPrZFqt4smGunpYRcwA7UsmpZZuiNRdHjfRVbuV9dguV-igL1jcufAO5WI5up9SA2wWj9DD1uQ0uojoLDUJux0IKqcoygFZs_YPkKkna3rR31dpCjjH7M"/>
+<div class="absolute -top-1 -right-1 bg-primary text-[8px] font-bold text-black px-1 rounded-sm">MOD</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="text-sm font-bold text-primary">Austinx</span>
+</div>
+<p class="text-xs text-gray-300 leading-relaxed">Begging in chat will result in a temporary mute.</p>
+</div>
+</div>
+<div class="flex gap-3 group">
+<div class="shrink-0 relative">
+<img class="w-8 h-8 rounded bg-gray-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCh5wTKoK-tv-rvVQqlgf6SNLm1xKDkRMLsoHV1GkTYWxQBYaFyfHJer9-C12qQOI74f5R7WCuAFZdh2lAcNGx3ZfYd3m63WEPqoo-uYIiP6f4OVxzpMjPP6Fdpu-My40iqhJGBfae8kRSls791yeY2L-kKP5D_xG8rjrRkxQhPQgVr9Uo7QBK4ThHB1EaGvhbddcdsWfqsGXp3UHqVfAzW8IGmGA-LwO7hqLlJXfTYA7oaeII1GzEQcQBG-tbmAkTzZcJ_gIdvF44"/>
+<div class="absolute -top-1 -right-1 bg-blue-500 text-[8px] font-bold text-white px-1 rounded-sm">12</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="text-sm font-bold text-blue-400">motionspark</span>
+</div>
+<p class="text-xs text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">take a look at the new case</p>
+</div>
+</div>
+<div class="flex gap-3 group">
+<div class="shrink-0 relative">
+<img class="w-8 h-8 rounded bg-gray-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCVwF33moC3U0oENPbnejUURjAUNrJJ6zJImu3hbBPbnlzXBujywYJ8F_dyiK2SaC_eMj2Jb4vXkf7W_kKpxlxVTZJlRAroqDl9pXd495qsFpql9faMPV-29YzYBvdYm3oX2zz_ieD4DQHZzkLHOLV3n5T_SdgfVZh00ryD2s_EyEFyjLGnH_aOxRrqC0MTCHQ-VCr-wCjnMVCCwsLagIxV8Ivr1-VmcK86zLrzvLpNCNpL5b8JMri8oFa2a4OSx-VFcBDp-jW9HxE"/>
+<div class="absolute -top-1 -right-1 bg-purple-500 text-[8px] font-bold text-white px-1 rounded-sm">17</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="text-sm font-bold text-purple-400">LordSavage</span>
+</div>
+<p class="text-xs text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">I just came on which one is it?</p>
+</div>
+</div>
+<div class="flex gap-3 group">
+<div class="shrink-0 relative">
+<img class="w-8 h-8 rounded bg-gray-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAK1tiWjRcPicIuW1tFJVO6Mbm2TJuuNdvP0EXQPbjJlN1-musttjTIKskq1fpzRAe4yvvKP0MtJAp55ABgsFEwPQJL63NqE6lrjESLNkBhd7S-c93AAWEv-8U3BdmaFNWYTF1ZpwF-uOBQMaeUmnjhNSdovuR5t64dIGvmnimLgffksengr0pw0tWtPfYQx5pzhRHTAtDekSWChCsBIzW7e6viNGemzaaK0AoQ5yFuU-xEg5ry5fFD6IeIwX71hmG36p8xxHT4OxU"/>
+<div class="absolute -top-1 -right-1 bg-yellow-500 text-[8px] font-bold text-black px-1 rounded-sm">56</div>
+</div>
+<div>
+<div class="flex items-baseline gap-2">
+<span class="text-sm font-bold text-gray-200">Jur1</span>
+<span class="text-[10px] text-gray-600">12:45</span>
+</div>
+<p class="text-xs text-gray-400 leading-relaxed group-hover:text-gray-300 transition-colors">Yeah I just got a crazy drop from it</p>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-nav-dark">
+<div class="relative">
+<input class="w-full bg-gray-100 dark:bg-card-dark border border-gray-200 dark:border-gray-700 rounded-lg py-3 px-4 text-sm text-gray-900 dark:text-gray-200 placeholder-gray-500 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors" placeholder="Type your message..." type="text"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-primary transition-colors">
+<span class="material-icons-round text-lg">sentiment_satisfied</span>
+</button>
+</div>
+</div>
+</aside>
+</div>
+
+</body></html>
